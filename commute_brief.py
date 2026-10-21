@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
 
 from weather_service import build_morning_brief_text, get_commute_weather
+from transit_service import get_commute_transit_status
 
 def send_line_push_message(message: str) -> bool:
     """
@@ -61,7 +62,8 @@ def main():
     print(f"📍 目標地區: {location}")
     
     weather_data = get_commute_weather(location=location)
-    brief = build_morning_brief_text(user_name=user_name, weather_data=weather_data, location=location)
+    transit_data = get_commute_transit_status(location=location)
+    brief = build_morning_brief_text(user_name=user_name, weather_data=weather_data, transit_data=transit_data, location=location)
     
     send_line_push_message(brief)
 

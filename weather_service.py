@@ -143,10 +143,26 @@ def get_commute_weather(location: str = "臺北市", api_key: Optional[str] = No
     
     return get_commute_weather_mock(norm_location)
 
-def build_morning_brief_text(user_name: str = "早安", weather_data: Optional[Dict[str, Any]] = None, location: str = "臺北市") -> str:
-    """依據取得之氣象資料組裝晨間推播文案"""
+def build_morning_brief_text(
+    user_name: str = "早安",
+    weather_data: Optional[Dict[str, Any]] = None,
+    transit_data: Optional[Dict[str, Any]] = None,
+    location: str = "臺北市"
+) -> str:
+    """依據取得之氣象與交通資料組裝晨間推播文案"""
     if weather_data is None:
         weather_data = get_commute_weather(location=location)
+
+    if transit_data is None:
+        try:
+            from transit_service import get_commute_transit_status
+            transit_data = get_commute_transit_status(location=location)
+        except Exception:
+            transit_data = {
+                "has_alert": False,
+                "status_text": "大眾運輸正常運作無事故通報。",
+                "source": "預設狀態"
+            }
 
     rain_prob = weather_data.get("rain_prob_commute", 0)
     if weather_data.get("umbrella_needed", False):
@@ -155,6 +171,7 @@ def build_morning_brief_text(user_name: str = "早安", weather_data: Optional[D
         umbrella_icon = f"🌤️ 降雨機率低 ({rain_prob}%)，外出活動輕鬆免帶傘。"
 
     temp_range = f"{weather_data.get('temp_min', weather_data['temperature'])}~{weather_data.get('temp_max', weather_data['temperature'])}°C"
+    transit_icon = "⚠️" if transit_data.get("has_alert") else "🚇"
 
     msg = f"""☀️【晨間通勤與天氣快報】
 {user_name}！今天是個美好的一天！
@@ -166,9 +183,10 @@ def build_morning_brief_text(user_name: str = "早安", weather_data: Optional[D
 
 👔 穿著指南：{weather_data['clothing_tip']}
 🍃 空氣品質：{weather_data['air_quality']}
-📡 資料來源：{weather_data.get('source', '中央氣象署')}
 
-🚇 交通狀況：大眾運輸正常運作無事故通報。
+{transit_icon} 交通狀況：{transit_data['status_text']}
+
+📡 資訊來源：{weather_data.get('source', '中央氣象署')} ｜ {transit_data.get('source', '交通部 TDX')}
 
 祝你今天上班/上學順利，元氣滿滿！💪"""
     return msg.strip()

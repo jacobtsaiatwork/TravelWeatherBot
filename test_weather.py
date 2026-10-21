@@ -1,3 +1,4 @@
+import os
 import unittest
 from unittest.mock import patch, MagicMock
 from weather_service import (
@@ -90,8 +91,9 @@ class TestWeatherService(unittest.TestCase):
         self.assertTrue(result["umbrella_needed"])
         self.assertIn("炎熱", result["clothing_tip"])
 
+    @patch.dict(os.environ, {"CWA_API_KEY": ""}, clear=False)
     def test_get_commute_weather_fallback_when_no_key(self):
-        result = get_commute_weather(location="新北市", api_key=None)
+        result = get_commute_weather(location="新北市", api_key="")
         self.assertEqual(result["location"], "新北市")
         self.assertIn("Mock", result["source"])
 
@@ -102,12 +104,20 @@ class TestWeatherService(unittest.TestCase):
         self.assertEqual(result["location"], "臺北市")
         self.assertIn("Mock", result["source"])
 
-    def test_build_morning_brief_text(self):
-        brief = build_morning_brief_text(user_name="小華")
+    @patch("transit_service.get_commute_transit_status")
+    def test_build_morning_brief_text(self, mock_transit):
+        mock_transit.return_value = {
+            "has_alert": False,
+            "status_text": "全線營運正常",
+            "source": "TDX"
+        }
+        weather_mock = get_commute_weather_mock("臺北市")
+        brief = build_morning_brief_text(user_name="小華", weather_data=weather_mock)
         self.assertIn("小華", brief)
         self.assertIn("晨間通勤與天氣快報", brief)
         self.assertIn("氣溫", brief)
         self.assertIn("穿著指南", brief)
+        self.assertIn("交通狀況", brief)
 
 if __name__ == "__main__":
     unittest.main()

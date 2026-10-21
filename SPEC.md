@@ -26,7 +26,9 @@
 * **`README.md`**：詳細部署、設定與使用說明。
 * **`weather_service.py`**：氣象資料抓取與降雨機率分析模組，支援 CWA API (F-C0032-001) 與自動降級。
 * **`commute_brief.py`**：主要執行腳本。負責組裝晨報內容、支援 CLI 參數 (`--force`, `--location`) 與 LINE 推播。
-* **`test_weather.py`**：單元測試套件，涵蓋 API 解析、穿著建議、縣市名稱正規化與 Fallback 機制。
+* **`transit_service.py`**：交通部 TDX 大眾運輸（北捷、新北捷、桃捷、中捷、高捷、台鐵）即時警訊查詢模組，具備 OAuth Token 本地快取與速率保護。
+* **`test_transit.py`**：交通模組單元測試套件，涵蓋 Token 快取、正常狀態判定、異常警訊組織與無金鑰降級。
+* **`test_weather.py`**：氣象單元測試套件，涵蓋 API 解析、穿著建議、縣市名稱正規化與 Fallback 機制。
 * **`scheduler.ps1`**：Windows 排程器（Task Scheduler）自動安裝腳本（設定平日早上 07:40 執行）。
 * **`requirements.txt`**：專案相依套件 (`requests`, `line-bot-sdk`, `python-dotenv`)。
 * **`.env.example`**：環境變數設定範例。
@@ -41,5 +43,9 @@
   - [x] 動態穿搭與帶傘建議判斷
   - [x] 優雅降級容錯機制 (Fallback to Mock)
   - [x] 單元測試套件覆蓋 (test_weather.py)
-- [ ] **Phase 3: 串接交通部 TDX 捷運/台鐵即時事件 API**
+- [x] **Phase 3: 串接交通部 TDX 捷運/台鐵即時事件 API**（已完成）
+  - [x] OAuth 2.0 Client Credentials 授權與 Token 自動快取
+  - [x] 台北捷運、新北捷運、桃園捷運、台中捷運、高雄捷運與台鐵即時營運通報
+  - [x] 正常狀態自動過濾與異常事件警告摘要
+  - [x] 單元測試套件覆蓋 (test_transit.py)
 - [ ] **Phase 4: 整合 Google Calendar 抓取今天第一個會議時間提醒**

@@ -2,6 +2,9 @@
 .env
 *.env
 !.env.example
+*.cache.json
+.tdx_token_cache.json
+
 
 # Python
 __pycache__/
