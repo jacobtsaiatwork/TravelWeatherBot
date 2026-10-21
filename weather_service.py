@@ -53,7 +53,14 @@ def fetch_cwa_weather(api_key: str, location: str = "臺北市") -> Dict[str, An
         "locationName": norm_location
     }
     
-    response = requests.get(CWA_API_BASE_URL, params=params, timeout=10)
+    try:
+        response = requests.get(CWA_API_BASE_URL, params=params, timeout=10)
+    except requests.exceptions.SSLError:
+        # 部分 Windows 環境下連線政府機關網域 (.gov.tw) 可能因憑證缺乏 Subject Key Identifier 而觸發 SSLError
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        response = requests.get(CWA_API_BASE_URL, params=params, timeout=10, verify=False)
+
     response.raise_for_status()
     data = response.json()
     
