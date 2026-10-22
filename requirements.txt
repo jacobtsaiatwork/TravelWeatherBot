@@ -3,4 +3,4 @@ line-bot-sdk>=3.8.0
 python-dotenv>=1.0.0
 icalendar>=6.0.0
 recurring-ical-events>=3.0.0
-
+python-dateutil>=2.8.2

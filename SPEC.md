@@ -53,6 +53,15 @@
   - [x] 自動過濾全天行程與定時會議，精準挑選今日最早會議提醒
   - [x] 跨信箱時間軸自動排序與今日總行程數統計
   - [x] 單元測試套件覆蓋 (test_calendar.py)
+- [x] **Phase 5: 全方位智慧秘書升級（視覺化、雷達圖、新聞、YouBike、Gemini AI 與下班模式）**（已完成）
+  - [x] LINE Flex Message 視覺化 Bubble 圖文卡片 UI（晨間活力藍 / 傍晚夕陽橙雙模式）
+  - [x] 中央氣象署 (CWA) 最新即時雷達回波圖（高降雨率自動附加圖資）
+  - [x] Google News 即時焦點快訊 Top 3
+  - [x] 交通部 TDX YouBike 2.0 即時空車與可還車位查詢（支援電輔車資訊）
+  - [x] Google Gemini AI 溫暖生活激勵短語（30~45 字客製化溫暖關懷，內建規則優雅降級）
+  - [x] 傍晚下班推播模式（下班返家路況、夜間天氣預報與身心放鬆提醒）
+  - [x] GitHub Actions 自動排程擴充（晨間 07:40 AM + 傍晚 17:40 PM 雙自動推播）
+  - [x] 全套單元測試覆蓋 (test_smart_assistant.py, test_flex_template.py)
 
 ---
 

@@ -47,9 +47,10 @@ def generate_clothing_tip(min_temp: float, max_temp: float, comfort_desc: str = 
     else:
         return "氣溫寒冷（最低僅 " + f"{min_temp:.0f}°C），請穿著發熱衣、毛衣與厚外套，注意防風禦寒保暖。"
 
-def fetch_cwa_weather(api_key: str, location: str = "臺北市") -> Dict[str, Any]:
+def fetch_cwa_weather(api_key: str, location: str = "臺北市", mode: str = "morning") -> Dict[str, Any]:
     """
     透過中央氣象署 Open Data API (F-C0032-001) 取得指定縣市的天氣預報資料。
+    支援 mode="morning" (白天時段) 或 mode="evening" (今晚到明晨時段)。
     """
     norm_location = normalize_location_name(location)
     params = {
@@ -74,17 +75,23 @@ def fetch_cwa_weather(api_key: str, location: str = "臺北市") -> Dict[str, An
     records = data.get("records", {})
     locations = records.get("location", [])
     if not locations:
-        raise ValueError(f"查無此縣市之天氣資料: {norm_location}")
+        raise ValueError(f"查查無此縣市之天氣資料: {norm_location}")
     
     loc_data = locations[0]
     elements = {elem["elementName"]: elem["time"] for elem in loc_data.get("weatherElement", [])}
     
-    # 取得最新一個時段預報 (通常為最近 12 小時，即通勤時段涵蓋範圍)
-    wx_item = elements.get("Wx", [{}])[0].get("parameter", {})
-    pop_item = elements.get("PoP", [{}])[0].get("parameter", {})
-    mint_item = elements.get("MinT", [{}])[0].get("parameter", {})
-    maxt_item = elements.get("MaxT", [{}])[0].get("parameter", {})
-    ci_item = elements.get("CI", [{}])[0].get("parameter", {})
+    # 決定時段索引 (0 為最新/白天時段，evening 若有多個時段可使用 1)
+    period_idx = 0
+    if mode == "evening":
+        wx_times = elements.get("Wx", [])
+        if len(wx_times) > 1:
+            period_idx = 1
+
+    wx_item = elements.get("Wx", [{}])[period_idx].get("parameter", {})
+    pop_item = elements.get("PoP", [{}])[period_idx].get("parameter", {})
+    mint_item = elements.get("MinT", [{}])[period_idx].get("parameter", {})
+    maxt_item = elements.get("MaxT", [{}])[period_idx].get("parameter", {})
+    ci_item = elements.get("CI", [{}])[period_idx].get("parameter", {})
     
     weather_status = wx_item.get("parameterName", "多雲")
     rain_prob = int(pop_item.get("parameterName", 0)) if pop_item.get("parameterName") else 0
@@ -127,7 +134,7 @@ def get_commute_weather_mock(location: str = "臺北市") -> Dict[str, Any]:
         "source": "本地模擬資料 (Mock Fallback)"
     }
 
-def get_commute_weather(location: str = "臺北市", api_key: Optional[str] = None) -> Dict[str, Any]:
+def get_commute_weather(location: str = "臺北市", api_key: Optional[str] = None, mode: str = "morning") -> Dict[str, Any]:
     """
     整合氣象資料入口：
     1. 若有 CWA_API_KEY 則呼叫中央氣象署官方 API。
@@ -138,8 +145,8 @@ def get_commute_weather(location: str = "臺北市", api_key: Optional[str] = No
     
     if cwa_key and cwa_key.strip() and not cwa_key.startswith("your_"):
         try:
-            logger.info(f"正在向中央氣象署 (CWA) 查詢 [{norm_location}] 天氣預報...")
-            return fetch_cwa_weather(api_key=cwa_key.strip(), location=norm_location)
+            logger.info(f"正在向中央氣象署 (CWA) 查詢 [{norm_location}] 天氣預報 (模式: {mode})...")
+            return fetch_cwa_weather(api_key=cwa_key.strip(), location=norm_location, mode=mode)
         except Exception as e:
             logger.warning(f"中央氣象署 API 呼叫失敗 ({e})，切換至優雅降級 (Fallback) 模式。")
     else:
@@ -147,16 +154,20 @@ def get_commute_weather(location: str = "臺北市", api_key: Optional[str] = No
     
     return get_commute_weather_mock(norm_location)
 
-def build_morning_brief_text(
+def build_commute_brief_text(
     user_name: str = "早安",
     weather_data: Optional[Dict[str, Any]] = None,
     transit_data: Optional[Dict[str, Any]] = None,
     calendar_data: Optional[Dict[str, Any]] = None,
-    location: str = "臺北市"
+    location: str = "臺北市",
+    mode: str = "morning",
+    ai_quote: str = "",
+    news_list: Optional[List[str]] = None,
+    youbike_list: Optional[List[Dict[str, Any]]] = None
 ) -> str:
-    """依據取得之氣象、交通與日曆資料組裝晨間推播文案"""
+    """依據取得之氣象、交通與日曆資料組裝文字推播文案 (支援晨間與傍晚雙模式)"""
     if weather_data is None:
-        weather_data = get_commute_weather(location=location)
+        weather_data = get_commute_weather(location=location, mode=mode)
 
     if transit_data is None:
         try:
@@ -176,45 +187,96 @@ def build_morning_brief_text(
         except Exception:
             calendar_data = {
                 "has_events": False,
-                "status_text": "今日早晨無安排會議，祝你專注享受充實的一天！",
+                "status_text": "今日早晨無安排會議，祝你專注享受充實的一天！" if mode == "morning" else "晚間公務行程已告一段落！",
                 "source": "預設狀態"
             }
 
+    is_morning = (mode == "morning")
+    title_header = "☀️【晨間通勤與天氣快報】" if is_morning else "🌆【傍晚下班與交通快報】"
+    greeting_line = f"{user_name}！今天是個美好的一天！" if is_morning else f"{user_name}！辛苦奮鬥了一整天，準備下班囉！"
+
     rain_prob = weather_data.get("rain_prob_commute", 0)
     if weather_data.get("umbrella_needed", False):
-        umbrella_icon = f"☔ 降雨機率 {rain_prob}%，出門請務必攜帶雨具！"
+        umbrella_icon = f"☔ 降雨機率 {rain_prob}%，出門請務必攜帶雨具！" if is_morning else f"☔ 降雨機率 {rain_prob}%，下班返家路滑請備雨具！"
     else:
-        umbrella_icon = f"🌤️ 降雨機率低 ({rain_prob}%)，外出活動輕鬆免帶傘。"
+        umbrella_icon = f"🌤️ 降雨機率低 ({rain_prob}%)，活動輕鬆免帶傘。"
 
     temp_range = f"{weather_data.get('temp_min', weather_data['temperature'])}~{weather_data.get('temp_max', weather_data['temperature'])}°C"
     transit_icon = "⚠️" if transit_data.get("has_alert") else "🚇"
-
     cal_icon = "📅" if calendar_data.get("has_events") else "☕"
 
     sources = [weather_data.get('source', '氣象署'), transit_data.get('source', 'TDX')]
     if calendar_data.get('source') and "未設定" not in calendar_data.get('source', ''):
         sources.append(calendar_data['source'])
+    if ai_quote:
+        sources.append("Gemini AI")
     source_line = " ｜ ".join(sources)
 
-    msg = f"""☀️【晨間通勤與天氣快報】
-{user_name}！今天是個美好的一天！
+    lines = [
+        title_header,
+        greeting_line,
+        "",
+        f"📍 地區：{weather_data['location']}",
+        f"🌡️ 氣溫：{weather_data['temperature']}°C (範圍 {temp_range}，{weather_data['weather_status']})",
+        f"🌧️ 通勤降雨率：{rain_prob}%",
+        umbrella_icon,
+        "",
+        f"👔 穿著指南：{weather_data['clothing_tip']}",
+        f"🍃 空氣品質：{weather_data['air_quality']}",
+        "",
+        f"{transit_icon} 交通狀況：{transit_data['status_text']}",
+        "",
+        f"{cal_icon} 行程動態：{calendar_data['status_text']}"
+    ]
 
-📍 地區：{weather_data['location']}
-🌡️ 氣溫：{weather_data['temperature']}°C (範圍 {temp_range}，{weather_data['weather_status']})
-🌧️ 通勤降雨率：{rain_prob}%
-{umbrella_icon}
+    # YouBike 資訊
+    if youbike_list and len(youbike_list) > 0:
+        lines.append("")
+        lines.append("🚲 YouBike 2.0 即時空車：")
+        for yb in youbike_list[:3]:
+            st_name = yb.get("name", "站點")
+            rent = yb.get("rent_bikes", 0)
+            ebike = yb.get("electric_bikes", 0)
+            ret = yb.get("return_spaces", 0)
+            ebike_str = f" (電輔 {ebike})" if ebike > 0 else ""
+            lines.append(f"  • {st_name}：可借 {rent}{ebike_str} ｜ 可還 {ret}")
 
-👔 穿著指南：{weather_data['clothing_tip']}
-🍃 空氣品質：{weather_data['air_quality']}
+    # AI 金句
+    if ai_quote:
+        lines.append("")
+        lines.append(f"✨ 秘書貼心悄悄話：{ai_quote}")
 
-{transit_icon} 交通狀況：{transit_data['status_text']}
+    # 新聞快訊 (晨間模式)
+    if is_morning and news_list and len(news_list) > 0:
+        lines.append("")
+        lines.append("📰 今日焦點快訊：")
+        for idx, news in enumerate(news_list[:3], 1):
+            lines.append(f"  {idx}. {news}")
 
-{cal_icon} 今日行程：{calendar_data['status_text']}
+    lines.append("")
+    lines.append(f"📡 資訊來源：{source_line}")
+    wish_line = "祝你今天上班/上學順利，元氣滿滿！💪" if is_morning else "祝你下班平安順心，享受溫馨夜晚！🌙"
+    lines.append("")
+    lines.append(wish_line)
 
-📡 資訊來源：{source_line}
+    return "\n".join(lines).strip()
 
-祝你今天上班/上學順利，元氣滿滿！💪"""
-    return msg.strip()
+def build_morning_brief_text(
+    user_name: str = "早安",
+    weather_data: Optional[Dict[str, Any]] = None,
+    transit_data: Optional[Dict[str, Any]] = None,
+    calendar_data: Optional[Dict[str, Any]] = None,
+    location: str = "臺北市"
+) -> str:
+    """向下相容 build_morning_brief_text 舊介面"""
+    return build_commute_brief_text(
+        user_name=user_name,
+        weather_data=weather_data,
+        transit_data=transit_data,
+        calendar_data=calendar_data,
+        location=location,
+        mode="morning"
+    )
 
 if __name__ == "__main__":
     brief = build_morning_brief_text(user_name="通勤夥伴")
