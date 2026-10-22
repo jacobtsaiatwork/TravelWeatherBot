@@ -2,7 +2,11 @@ import os
 import sys
 import logging
 import requests
+from pathlib import Path
 from typing import Dict, Any, Optional
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).parent / ".env")
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -147,9 +151,10 @@ def build_morning_brief_text(
     user_name: str = "早安",
     weather_data: Optional[Dict[str, Any]] = None,
     transit_data: Optional[Dict[str, Any]] = None,
+    calendar_data: Optional[Dict[str, Any]] = None,
     location: str = "臺北市"
 ) -> str:
-    """依據取得之氣象與交通資料組裝晨間推播文案"""
+    """依據取得之氣象、交通與日曆資料組裝晨間推播文案"""
     if weather_data is None:
         weather_data = get_commute_weather(location=location)
 
@@ -164,6 +169,17 @@ def build_morning_brief_text(
                 "source": "預設狀態"
             }
 
+    if calendar_data is None:
+        try:
+            from calendar_service import get_today_first_meeting
+            calendar_data = get_today_first_meeting()
+        except Exception:
+            calendar_data = {
+                "has_events": False,
+                "status_text": "今日早晨無安排會議，祝你專注享受充實的一天！",
+                "source": "預設狀態"
+            }
+
     rain_prob = weather_data.get("rain_prob_commute", 0)
     if weather_data.get("umbrella_needed", False):
         umbrella_icon = f"☔ 降雨機率 {rain_prob}%，出門請務必攜帶雨具！"
@@ -172,6 +188,13 @@ def build_morning_brief_text(
 
     temp_range = f"{weather_data.get('temp_min', weather_data['temperature'])}~{weather_data.get('temp_max', weather_data['temperature'])}°C"
     transit_icon = "⚠️" if transit_data.get("has_alert") else "🚇"
+
+    cal_icon = "📅" if calendar_data.get("has_events") else "☕"
+
+    sources = [weather_data.get('source', '氣象署'), transit_data.get('source', 'TDX')]
+    if calendar_data.get('source') and "未設定" not in calendar_data.get('source', ''):
+        sources.append(calendar_data['source'])
+    source_line = " ｜ ".join(sources)
 
     msg = f"""☀️【晨間通勤與天氣快報】
 {user_name}！今天是個美好的一天！
@@ -186,7 +209,9 @@ def build_morning_brief_text(
 
 {transit_icon} 交通狀況：{transit_data['status_text']}
 
-📡 資訊來源：{weather_data.get('source', '中央氣象署')} ｜ {transit_data.get('source', '交通部 TDX')}
+{cal_icon} 今日行程：{calendar_data['status_text']}
+
+📡 資訊來源：{source_line}
 
 祝你今天上班/上學順利，元氣滿滿！💪"""
     return msg.strip()

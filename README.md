@@ -32,11 +32,13 @@
 ```text
 ├── SPEC.md             # 專案規格書與 Roadmap
 ├── README.md           # 專案說明與操作指南
-├── weather_service.py  # 氣象資料取得、CWA API 串接、穿搭建議與容錯降級模組
-├── transit_service.py  # 交通部 TDX 捷運/台鐵即時通報、OAuth Token 快取模組
-├── commute_brief.py    # 晨報組裝主程式、CLI 參數解析與 LINE 推播模組
-├── test_weather.py     # 氣象模組單元測試套件
-├── test_transit.py     # 交通模組單元測試套件
+├── weather_service.py   # 氣象資料取得、CWA API 串接、穿搭建議與容錯降級模組
+├── transit_service.py   # 交通部 TDX 捷運/台鐵即時通報、OAuth Token 快取模組
+├── calendar_service.py  # Google 日曆多信箱聚合、首場會議提醒模組
+├── commute_brief.py     # 晨報組裝主程式、CLI 參數解析與 LINE 推播模組
+├── test_weather.py      # 氣象模組單元測試套件
+├── test_transit.py      # 交通模組單元測試套件
+├── test_calendar.py     # 日曆模組單元測試套件
 ├── scheduler.ps1       # Windows 工作排程器註冊自動化腳本
 ├── requirements.txt    # Python 依賴清單
 ├── .env.example        # 環境變數設定範本
@@ -88,6 +90,7 @@ python commute_brief.py --force --location 高雄市
 ```powershell
 python test_weather.py
 python test_transit.py
+python test_calendar.py
 ```
 
 ### 5. 註冊 Windows 工作排程器（平日 07:40 自動執行）
@@ -107,4 +110,4 @@ powershell -ExecutionPolicy Bypass -File .\scheduler.ps1
 - [x] **Phase 1: 天氣簡報產生與排程腳本**
 - [x] **Phase 2: 串接中央氣象署 CWA 官方 API 授權碼**
 - [x] **Phase 3: 串接交通部 TDX 捷運/台鐵即時事件 API**
-- [ ] **Phase 4: 整合 Google Calendar 抓取今天第一個會議時間提醒**
+- [x] **Phase 4: 整合 Google Calendar 抓取今天第一個會議時間提醒**
