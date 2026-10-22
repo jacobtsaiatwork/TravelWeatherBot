@@ -65,7 +65,10 @@ def main():
     transit_data = get_commute_transit_status(location=location)
     brief = build_morning_brief_text(user_name=user_name, weather_data=weather_data, transit_data=transit_data, location=location)
     
-    send_line_push_message(brief)
+    success = send_line_push_message(brief)
+    if not success and os.getenv("CI"):
+        print("❌ 執行失敗：在雲端 CI 環境下未能成功發送 LINE 推播，請檢查 Secrets 與 Token 設定。")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
