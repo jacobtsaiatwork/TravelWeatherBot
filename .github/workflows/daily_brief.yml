@@ -20,14 +20,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: 執行晨間通勤天氣推播
+      - name: 建立環境變數檔 (.env)
         env:
-          CWA_API_KEY: ${{ secrets.CWA_API_KEY }}
-          TDX_CLIENT_ID: ${{ secrets.TDX_CLIENT_ID }}
-          TDX_CLIENT_SECRET: ${{ secrets.TDX_CLIENT_SECRET }}
-          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
-          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
-          LOCATION: '臺北市'
-          USER_NAME: '通勤夥伴'
+          DOTENV_CONTENT: ${{ secrets.DOTENV }}
+        run: |
+          echo "$DOTENV_CONTENT" > .env
+      - name: 執行晨間通勤天氣推播
         run: |
           python commute_brief.py --force
