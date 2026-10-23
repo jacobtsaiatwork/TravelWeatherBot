@@ -3,7 +3,7 @@ import sys
 import logging
 import requests
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")

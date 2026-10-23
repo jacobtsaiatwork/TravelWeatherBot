@@ -110,23 +110,25 @@ def main():
     location = args.location or os.getenv("LOCATION", "臺北市")
     user_name = os.getenv("USER_NAME", "通勤夥伴")
 
+    taipei_tz = datetime.timezone(datetime.timedelta(hours=8))
+    now_taipei = datetime.datetime.now(taipei_tz)
+
     # 若為 auto，則依台北時間 (UTC+8) 小時自動判定
     if args.mode == "auto":
-        taipei_tz = datetime.timezone(datetime.timedelta(hours=8))
-        current_hour = datetime.datetime.now(taipei_tz).hour
+        current_hour = now_taipei.hour
         mode = "evening" if 15 <= current_hour <= 23 else "morning"
     else:
         mode = args.mode
 
     # 檢查是否為工作日 (0=Mon, 4=Fri, 5=Sat, 6=Sun)
-    today = datetime.date.today()
+    today = now_taipei.date()
     if today.weekday() >= 5 and not args.force:
         mode_label = "晨間" if mode == "morning" else "傍晚"
         print(f"🏖️ 今天是週末 ({today})，跳過{mode_label}工作通勤推播。(若欲立即測試請加上 --force 參數)")
         return
 
     mode_name = "☀️ 晨間出門" if mode == "morning" else "🌆 傍晚下班"
-    print(f"⏰ 啟動【{mode_name}】通勤快報任務: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"⏰ 啟動【{mode_name}】通勤快報任務: {now_taipei.strftime('%Y-%m-%d %H:%M:%S')} (UTC+8)")
     print(f"📍 目標地區: {location}")
 
     # 1. 天氣資料
