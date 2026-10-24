@@ -120,13 +120,7 @@ def main():
     else:
         mode = args.mode
 
-    # 檢查是否為工作日 (0=Mon, 4=Fri, 5=Sat, 6=Sun)
-    today = now_taipei.date()
-    if today.weekday() >= 5 and not args.force:
-        mode_label = "晨間" if mode == "morning" else "傍晚"
-        print(f"🏖️ 今天是週末 ({today})，跳過{mode_label}工作通勤推播。(若欲立即測試請加上 --force 參數)")
-        return
-
+    # 每日皆執行推播 (含平日與週末)
     mode_name = "☀️ 晨間出門" if mode == "morning" else "🌆 傍晚下班"
     print(f"⏰ 啟動【{mode_name}】通勤快報任務: {now_taipei.strftime('%Y-%m-%d %H:%M:%S')} (UTC+8)")
     print(f"📍 目標地區: {location}")
