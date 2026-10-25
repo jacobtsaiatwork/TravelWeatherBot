@@ -15,6 +15,22 @@ if ($RunDispatch) {
         "User-Agent"    = "PowerShell-CommuteWeatherBrief"
         "Accept"        = "application/vnd.github+json"
     }
+    # Check if current time is within acceptable dispatch windows
+    $nowLocal = Get-Date
+    $currentHour = $nowLocal.Hour
+    $currentMinute = $nowLocal.Minute
+    $totalMinutes = $currentHour * 60 + $currentMinute
+
+    # Morning window: 07:30 - 09:30 (450 to 570 mins)
+    # Evening window: 17:30 - 19:30 (1050 to 1170 mins)
+    $inMorningWindow = ($totalMinutes -ge 450 -and $totalMinutes -le 570)
+    $inEveningWindow = ($totalMinutes -ge 1050 -and $totalMinutes -le 1170)
+
+    if (-not ($inMorningWindow -or $inEveningWindow)) {
+        Write-Host "[SKIP] Current time ($($nowLocal.ToString('HH:mm'))) is outside commute dispatch windows (07:30-09:30, 17:30-19:30)." -ForegroundColor Yellow
+        exit 0
+    }
+
     $runsResp = Invoke-RestMethod -Uri "https://api.github.com/repos/jacobtsaiatwork/TravelWeatherBot/actions/runs?per_page=3" -Headers $headers
     $nowUtc = (Get-Date).ToUniversalTime()
     $recentRun = $false
