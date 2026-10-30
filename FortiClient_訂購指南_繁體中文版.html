@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortinet FortiClient 訂購指南 (繁體中文版)</title>
+<style>
+  :root {
+    --primary: #c00;
+    --primary-dark: #990000;
+    --dark: #222;
+    --gray-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    --table-header: #2c3e50;
+    --text-color: #333;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #fff;
+    margin: 0;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  header {
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--primary);
+  }
+  .doc-title {
+    font-size: 24px;
+    color: #444;
+    margin: 0;
+  }
+  .badge {
+    background: #eef2f5;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #666;
+  }
+  h1, h2, h3, h4 {
+    color: var(--dark);
+    margin-top: 1.5em;
+  }
+  h2 {
+    border-left: 5px solid var(--primary);
+    padding-left: 12px;
+    font-size: 20px;
+    background: #fbfbfb;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #34495e;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--border-color);
+    padding: 10px 12px;
+    text-align: left;
+  }
+  th {
+    background-color: var(--table-header);
+    color: #fff;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background-color: var(--gray-bg);
+  }
+  td.center, th.center {
+    text-align: center;
+  }
+  code {
+    background: #f1f3f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    color: #d63384;
+  }
+  .check {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .cross {
+    color: #adb5bd;
+  }
+  .note-box {
+    background: #e8f4fd;
+    border-left: 4px solid #0284c7;
+    padding: 14px 18px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+  }
+  .warn-box {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 14px 18px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  .faq-q {
+    font-weight: bold;
+    color: #1a56db;
+    margin-top: 15px;
+    font-size: 15px;
+  }
+  .faq-a {
+    margin-left: 10px;
+    margin-bottom: 15px;
+    color: #444;
+  }
+  footer {
+    margin-top: 50px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.5;
+  }
+  @media print {
+    body { padding: 0; }
+    h2 { page-break-before: auto; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="logo">FORTINET</div>
+      <h1 class="doc-title">FortiClient 訂購指南 (Ordering Guide)</h1>
+    </div>
+    <div>
+      <span class="badge">繁體中文版 ｜ 文件代號: FC-OG-R27-20260429</span>
+    </div>
+  </header>
+
+  <div class="note-box">
+    <strong>概要說明：</strong>FortiClient 提供彈性的訂購結構以滿足各種規模組織的資安防護需求，全面採用<strong>依設備計費授權模式（Device-based Licensing）</strong>。
+  </div>
+
+  <h2>1. 關鍵重點與訂購特性 (Key Aspects)</h2>
+  <ul>
+    <li><strong>部署模式選項 (Deployment Options)</strong>：客戶可依架構自由選擇<strong>雲端託管 (Cloud)</strong> 或<strong>地端內部部署 (On-premise)</strong>。</li>
+    <li><strong>解決方案專用料號 (Solution SKUs)</strong>：針對不同安全層次提供專屬 SKU 套裝，包括 <code>VPN/ZTNA</code>、<code>EPP/ATP</code> 以及由原廠專家交付的 <code>Managed FortiClient</code> 代管服務。</li>
+    <li><strong>附加增值服務 (Additional Services)</strong>：提供端點數位鑑識分析（Endpoint Forensics Analysis）與 FortiCare 最佳實踐顧問諮詢（BPS Consultation）。</li>
+    <li><strong>FortiToken 授權權益</strong>：FortiClient 授權<strong>不包含</strong> FortiToken MFA 權益，如需雙因子驗證必須另行加購。</li>
+    <li><strong>設備授權包級距 (Device-Based Licensing)</strong>：提供 <strong>25、500、2000 與 10,000 台設備包</strong> 彈性採購。</li>
+    <li><strong>合約生命週期管理 (Order Lifecycle Management)</strong>：建議使用原廠 <strong>Co-term（到期日對齊工具）</strong>管理後續增購、續約與版本升級，統一多張合約之到期日，簡化企業授權維運。</li>
+    <li><strong>跨架構升級限制 (Upgrade Limitations)</strong>：<strong>不支援</strong>直接由地端（On-premise）SKU 升級換成雲端（Cloud）SKU。若欲切換架構，必須採購全新 SKU 並對齊新的 EMS 實例。</li>
+  </ul>
+
+  <h2>2. 完整功能功能比較矩陣 (Feature Matrix)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>功能模組與安全特性</th>
+        <th class="center" style="width: 15%;">VPN / ZTNA</th>
+        <th class="center" style="width: 15%;">EPP / ATP</th>
+        <th class="center" style="width: 15%;">MANAGED (專家代管)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#edf2f7;"><th colspan="4" style="background:#334155; color:#fff;">零信任代理 (ZERO TRUST AGENT)</th></tr>
+      <tr><td>零信任網路存取 (ZTNA)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>集中化管理 (Central Management via EMS)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>集中日誌記錄與報表 (Central Logging and Reporting)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>SSL VPN 支援多因子驗證 (MFA)*</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>IPsec VPN 支援多因子驗證 (MFA)*</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>行動代理單一登入 (Single Sign On Mobility Agent)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+
+      <tr style="background:#edf2f7;"><th colspan="4" style="background:#334155; color:#fff;">IT 系統衛生與弱點管理 (IT HYGIENE)</th></tr>
+      <tr><td>弱點偵測代理與自動修補 (Vulnerability Agent & Remediation)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>FortiGuard 網頁過濾 (Web Filtering)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>軟體資產清冊盤點 (Software Inventory)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>抽取式媒體控制 / USB 外接裝置管制 (Removable Media Control)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+
+      <tr style="background:#edf2f7;"><th colspan="4" style="background:#334155; color:#fff;">雲端存取安全代理 (CASB)</th></tr>
+      <tr><td>基於雲端 / API 之 CASB (Cloud/API-based CASB)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>SaaS 應用程式控制 (Inline CASB 內嵌管控)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>FortiGuard 即時 SaaS 應用特徵資料庫更新</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>雲端資料惡意軟體偵測 (Malware Detection for Cloud Data)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+
+      <tr style="background:#edf2f7;"><th colspan="4" style="background:#334155; color:#fff;">端點防護平台 (ENDPOINT SECURITY - EPP)</th></tr>
+      <tr><td>FortiClient 雲端沙箱 (Cloud Sandbox SaaS)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>FortiSandbox 整合 (PaaS / 公有雲 / 地端設備)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>人工智慧 AI 次世代防毒引擎 (AI-powered NGAV)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>自動化端點隔離 (Automated Endpoint Quarantine)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>勒索軟體專屬防護 (Ransomware Protection)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>FortiGuard 疫情爆發即時防禦 (Outbreak Detection)</td><td class="center cross">—</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+
+      <tr style="background:#edf2f7;"><th colspan="4" style="background:#334155; color:#fff;">原廠專家代管服務 (MANAGED FORTICLIENT SERVICE)</th></tr>
+      <tr><td>端點設備上線導入 (Endpoint Onboarding)</td><td class="center cross">—</td><td class="center cross">—</td><td class="center check">✔</td></tr>
+      <tr><td>初始環境配置調校 (Initial Provisioning)</td><td class="center cross">—</td><td class="center cross">—</td><td class="center check">✔</td></tr>
+      <tr><td>Fortinet Security Fabric 安全聯防整合設定</td><td class="center cross">—</td><td class="center cross">—</td><td class="center check">✔</td></tr>
+      <tr><td>端點弱點狀態持續監控 (Vulnerability Monitoring)</td><td class="center cross">—</td><td class="center cross">—</td><td class="center check">✔</td></tr>
+      <tr><td>端點資安事件威脅監控 (Endpoint Security Monitoring)</td><td class="center cross">—</td><td class="center cross">—</td><td class="center check">✔</td></tr>
+
+      <tr style="background:#edf2f7;"><th colspan="4" style="background:#334155; color:#fff;">其他與進階支援服務 (ADDITIONAL SERVICES)</th></tr>
+      <tr><td>FortiCare 最佳實踐顧問諮詢 (BPS Consultation)</td><td class="center">帳戶加購</td><td class="center">帳戶加購</td><td class="center check">✔ (內含)</td></tr>
+      <tr><td>端點數位鑑識分析服務 (Endpoint Forensics Analysis)**</td><td class="center">選購加購</td><td class="center">選購加購</td><td class="center">選購加購</td></tr>
+      <tr><td>7x24 原廠全天候支援 (24x7 Support)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center check">✔</td></tr>
+      <tr><td>地端 / 實體隔離無網環境支援 (On-premise / Air Gap Option)</td><td class="center check">✔</td><td class="center check">✔</td><td class="center cross">—</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:12px; color:#666;">
+    * FortiClient 授權不含 FortiToken MFA 授權，需另購。<br>
+    ** 此選項需採購專用 SKU 組合套件。<br>
+    附註：Chromebook 安全防護亦支援由 EMS 集中管理、FortiGuard 網頁過濾及加值服務。FortiSASE 訂購資訊已獨立移至 FortiSASE 訂購指南，支援從 FortiClient 授權升級。
+  </div>
+
+  <h2>3. 訂購資訊：依設備授權 (Device-based)</h2>
+  <p>FortiClient 提供 25、500、2000 及 10000 設備包，以下為標準料號（尾碼 <code>-DD</code> 代表訂閱年期，例如 <code>-12</code> 為 1 年期）：</p>
+
+  <h3>(1) 標準授權料號表 (Standard License SKUs)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>部署架構</th>
+        <th>授權包級距</th>
+        <th>VPN / ZTNA</th>
+        <th>EPP / ATP</th>
+        <th>MANAGED (代管)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td rowspan="4"><strong>雲端代管<br>(Cloud)</strong></td><td>25-pack</td><td><code>FC1-10-EMS05-428-01-DD</code></td><td><code>FC1-10-EMS05-429-01-DD</code></td><td><code>FC1-10-EMS05-485-01-DD</code></td></tr>
+      <tr><td>500-pack</td><td><code>FC2-10-EMS05-428-01-DD</code></td><td><code>FC2-10-EMS05-429-01-DD</code></td><td><code>FC2-10-EMS05-485-01-DD</code></td></tr>
+      <tr><td>2000-pack</td><td><code>FC3-10-EMS05-428-01-DD</code></td><td><code>FC3-10-EMS05-429-01-DD</code></td><td><code>FC3-10-EMS05-485-01-DD</code></td></tr>
+      <tr><td>10000-pack</td><td><code>FC4-10-EMS05-428-01-DD</code></td><td><code>FC4-10-EMS05-429-01-DD</code></td><td><code>FC4-10-EMS05-485-01-DD</code></td></tr>
+      <tr><td rowspan="4"><strong>地端部署<br>(On-premise)</strong></td><td>25-pack</td><td><code>FC1-10-EMS04-428-01-DD</code></td><td><code>FC1-10-EMS04-429-01-DD</code></td><td class="center" rowspan="4"><em>不適用 (N/A)</em></td></tr>
+      <tr><td>500-pack</td><td><code>FC2-10-EMS04-428-01-DD</code></td><td><code>FC2-10-EMS04-429-01-DD</code></td></tr>
+      <tr><td>2000-pack</td><td><code>FC3-10-EMS04-428-01-DD</code></td><td><code>FC3-10-EMS04-429-01-DD</code></td></tr>
+      <tr><td>10000-pack</td><td><code>FC4-10-EMS04-428-01-DD</code></td><td><code>FC4-10-EMS04-429-01-DD</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>(2) 含數位鑑識分析服務料號表 (Forensics Analysis SKUs)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>授權模式</th>
+        <th>授權包級距</th>
+        <th>VPN / ZTNA</th>
+        <th>VPN/ZTNA + EPP/ATP</th>
+        <th>MANAGED (代管)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td rowspan="4"><strong>依設備授權<br>(Device-based)</strong></td><td>25-pack</td><td><code>FC1-10-EMS05-537-01-DD</code></td><td><code>FC1-10-EMS05-538-01-DD</code></td><td><code>FC1-10-EMS05-539-01-DD</code></td></tr>
+      <tr><td>500-pack</td><td><code>FC2-10-EMS05-537-01-DD</code></td><td><code>FC2-10-EMS05-538-01-DD</code></td><td><code>FC2-10-EMS05-539-01-DD</code></td></tr>
+      <tr><td>2000-pack</td><td><code>FC3-10-EMS05-537-01-DD</code></td><td><code>FC3-10-EMS05-538-01-DD</code></td><td><code>FC3-10-EMS05-539-01-DD</code></td></tr>
+      <tr><td>10000-pack</td><td><code>FC4-10-EMS05-537-01-DD</code></td><td><code>FC4-10-EMS05-538-01-DD</code></td><td><code>FC4-10-EMS05-539-01-DD</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <strong>FortiClient 鑑識服務搭配 SOCaaS 須知：</strong>必須使用 FortiAnalyzer 地端設備或 FortiAnalyzer Cloud 將日誌轉發至 SOCaaS。請務必在 FortiAnalyzer Cloud 加購充足日誌空間，或檢視地端設備容量是否充足。
+  </div>
+
+  <h3>(3) 訂單生命週期實例操作指南 (Order Lifecycle Examples)</h3>
+  <ul>
+    <li><strong>新訂單 (New Order)</strong>：例：採購 500 台 ZTNA 端點 ➔ 直接下單 1 組 500-pack：<code>FC2-10-EMS05-428-01-12</code>。</li>
+    <li><strong>擴充增購端點 (Add More Endpoints)</strong>：例：現有 500 台，增購 50 台 ZTNA ➔ 直接下單 2 組 25-pack：<code>FC1-10-EMS05-428-01-12 (x2)</code>。</li>
+    <li><strong>全數續約 (Renew All Endpoints)</strong>：例：550 台 ZTNA 續約 ➔ 在首筆合約到期時，使用 <strong>Co-term 工具</strong>對齊至相同到期日：
+      <br>• <code>FC1Z-15-EMS05-428-02-00 (x2)</code>
+      <br>• <code>FC2Z-15-EMS05-428-02-00 (x1)</code>
+    </li>
+    <li><strong>功能版本升級 (Upgrade Endpoints)</strong>：例：將 550 台 ZTNA 升級至 EPP/ATP ➔ 使用 Co-term 工具補差額升級至合約期滿，後續再接續標準續約：
+      <br>• <code>FC1Z-15-EMS05-429-02-00 (x2)</code>
+      <br>• <code>FC2Z-15-EMS05-429-02-00 (x1)</code>
+    </li>
+  </ul>
+
+  <h2>4. FortiCare 最佳實踐諮詢服務 (BPS)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>附加服務項目</th>
+        <th>涵蓋端點規模</th>
+        <th>訂購料號 (SKU License)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td rowspan="3"><strong>FortiCare 最佳實踐顧問諮詢<br>(BPS Consultation Service)</strong></td><td>25 ~ 999 台端點</td><td><code>FC1-10-FCBPS-310-02-DD</code></td></tr>
+      <tr><td>1000 ~ 9999 台端點</td><td><code>FC2-10-FCBPS-310-02-DD</code></td></tr>
+      <tr><td>10000+ 台端點</td><td><code>FC5-10-FCBPS-310-02-DD</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>5. 升級路徑矩陣 (Upgrade Matrix)</h2>
+  <div class="warn-box">
+    <strong>重大升級規範：</strong>
+    <ol>
+      <li><strong>不可跨架構直接升級</strong>：不支援地端與雲端 SKU 之間直接升級。若欲換架構，須購買全新架構 SKU 並建立新 EMS 實例（可由 BPS 團隊協助遷移）。</li>
+      <li><strong>Chromebook 為獨立架構</strong>：不允許與其他版本互相升級。</li>
+      <li>同在雲端（Cloud）或同在地端（On-premise）內部之升級，可使用 Co-term 工具直接辦理。</li>
+    </ol>
+  </div>
+
+  <h3>(1) 雲端授權升級矩陣 (Cloud Licenses)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>原有方案</th>
+        <th>升級至 ZTNA/VPN</th>
+        <th>升級至 EPP/ATP</th>
+        <th>升級至 Managed Client</th>
+        <th>升級至 SASE (Agent-based)*</th>
+        <th>升級至 SASE (Agentless)*</th>
+        <th>升級至 Chromebook</th>
+        <th>升級至 Managed + Forensics</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>ZTNA / VPN</strong></td><td class="center" style="background:#eee;">原方案</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center cross">不支援</td><td class="center check">可升級</td></tr>
+      <tr><td><strong>EPP / ATP</strong></td><td class="center cross">不支援</td><td class="center" style="background:#eee;">原方案</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center cross">不支援</td><td class="center check">可升級</td></tr>
+      <tr><td><strong>Managed Client</strong></td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center" style="background:#eee;">原方案</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center check">可升級</td></tr>
+      <tr><td><strong>Chromebook</strong></td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center" style="background:#eee;">原方案</td><td class="center cross">不支援</td></tr>
+    </tbody>
+  </table>
+
+  <h3>(2) 地端內部部署升級矩陣 (On-Premise Licenses)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>原有方案</th>
+        <th>升級至 ZTNA/VPN</th>
+        <th>升級至 EPP/ATP</th>
+        <th>升級至 ZTNA + Forensics</th>
+        <th>升級至 EPP/ATP + Forensics</th>
+        <th>升級至 Chromebook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>ZTNA / VPN</strong></td><td class="center" style="background:#eee;">原方案</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center check">可升級</td><td class="center cross">不支援</td></tr>
+      <tr><td><strong>EPP / ATP</strong></td><td class="center cross">不支援</td><td class="center" style="background:#eee;">原方案</td><td class="center cross">不支援</td><td class="center check">可升級</td><td class="center cross">不支援</td></tr>
+      <tr><td><strong>Chromebook</strong></td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center cross">不支援</td><td class="center" style="background:#eee;">原方案</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6. 獨立版 FortiClient (Standalone / User-based)</h2>
+  <p>FortiClient Standalone 為<strong>非集中託管方案</strong>，專為無須透過 EMS 集中管理的小型部署設計。整合 <strong>FortiIdentity Cloud</strong> 進行身分管理與使用者授權驗證。</p>
+  <ul>
+    <li>✔ IPsec VPN 連線</li>
+    <li>✔ 單一登入行動代理 (Single Sign On Mobility Agent)</li>
+    <li>✔ FortiPAM 代理支援</li>
+    <li>✔ 整合 FortiIdentity Cloud 身分管理</li>
+    <li>✔ 整合 FortiToken MFA 多因子驗證</li>
+    <li>✔ 電子郵件支援服務 (Email Based Support)</li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>方案名稱</th>
+        <th>授權包級距</th>
+        <th>訂購料號 (SKU License)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Standalone (DIY 獨立版)</strong></td>
+        <td>50+ (最低起訂量 MOQ 50)</td>
+        <td><code>FC1-10-FCTST-1284-02-DD (MOQ 50)</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:13px; color:#666;">
+    * 亦可於 FortiCloud Marketplace 使用 FortiPoints 點數採購，該管道最低起訂量為 5 個使用者。
+  </div>
+
+  <h2>7. 原廠教育訓練與認證 (Training & Certification)</h2>
+  <p><strong>FCP - FortiClient EMS Administrator 原廠系統管理員訓練與認證</strong></p>
+  <p>學習如何配置 FortiClient EMS 各項特性、發布端點配置、整合 Security Fabric、部署與設定 ZTNA 零信任網路存取及端點安全防護。</p>
+  <ul>
+    <li>課程先修條件與大綱：<a href="https://training.fortinet.com/local/staticpage/view.php?page=library_forticlient-ems-administrator" target="_blank">FortiClient EMS Administrator 課程說明</a></li>
+    <li>訓練料號與採購方式：<a href="https://training.fortinet.com/local/staticpage/view.php?page=purchasing_process" target="_blank">教育訓練採購流程</a></li>
+  </ul>
+
+  <h2>8. 常見問題集 (Frequently Asked Questions)</h2>
+  
+  <div class="faq-q">Q1：什麼是 BPS？為什麼新專案都強烈建議納入？</div>
+  <div class="faq-a">答：BPS 提供與 Fortinet 原廠產品專家預約諮詢的管道，涵蓋解決方案部署指引、穩定產品升級路徑建議、授權升級指南，以及最低資料遺失、終端使用者無感的 EMS 遷移技術支援。強烈建議在每一筆新客戶專案中加入 BPS。</div>
+
+  <div class="faq-q">Q2：最簡單的下單方式是什麼？</div>
+  <div class="faq-a">答：提供 1 到 5 年期的設備數量包。增購、續約與升級請參考第 3 節的 Co-term 訂單生命週期操作實例。</div>
+
+  <div class="faq-q">Q3：FortiClient 是依使用者（Per-user）還是依設備（Per-device）計費？</div>
+  <div class="faq-a">答：無論是地端內部部署的 FortiClient EMS 還是雲端 FortiClient Cloud，<strong>一律依設備 / 端點 (Per-device / Endpoint) 計費授權</strong>。（僅 Standalone DIY 版依使用者計費）。</div>
+
+  <div class="faq-q">Q4：原本第一、二頁的 SASE 選項去哪了？</div>
+  <div class="faq-a">答：所有 SASE 選項均完整保留。Fortinet 已將 SASE 相關內容整併至獨立的《FortiSASE 訂購指南》，並支援將 FortiClient 授權升級為 FortiSASE。</div>
+
+  <div class="faq-q">Q5：如何從現有 FortiClient 授權升級到更高階授權？</div>
+  <div class="faq-a">答：可透過原廠 Co-term（到期日對齊工具）計算差額升級。<strong>請特別注意：不支援地端 EMS 與雲端 Cloud EMS 之間的直接升級切換。</strong></div>
+
+  <div class="faq-q">Q6：EMS 管理伺服器有哪些部署選項？</div>
+  <div class="faq-a">答：可安裝於 Linux 伺服器（7.4 版）或 Windows 伺服器（7.2 及更早版本），可部署於本地機房（On-premise）或公有雲。亦可直接採用原廠託管的 FortiClient Cloud SaaS 服務。</div>
+
+  <div class="faq-q">Q7：什麼是 FortiClient Cloud？</div>
+  <div class="faq-a">答：FortiClient Cloud 是由 Fortinet 原廠代管維護的 EMS 實例，企業無須自行建置與維護地端伺服器硬體與作業系統。</div>
+
+  <div class="faq-q">Q8：FortiClient Cloud 最多可管理多少台端點？</div>
+  <div class="faq-a">答：單一 FortiClient Cloud 實例最高可集中管理高達 <strong>250,000 台端點</strong>。</div>
+
+  <div class="faq-q">Q9：什麼是 ZTNA？</div>
+  <div class="faq-a">答：ZTNA 指的是 FortiOS 與 FortiClient 內建以代理為基礎（Proxy-based）的零信任網路存取功能，包含端點設備安全狀態檢查（Posture Checks）、數位憑證生命週期管理，以及安全加密連線存取 FortiGate 後方的應用系統。</div>
+
+  <div class="faq-q">Q10：我之前購買的是 EMS01 / EMS03 舊料號，能否直接升級至新的 EMS04 / EMS05 料號？</div>
+  <div class="faq-a">答：由於產品功能架構調整，<strong>無法直接升級</strong>。客戶應於合約到期續約時採購全新 SKU 料號。若以往是使用舊料號的地端部署，建議順勢直接轉換遷移至雲端 FortiClient Cloud 方案。</div>
+
+  <div class="faq-q">Q11：使用 FortiClient Cloud 是否強制需要 FortiCloud Premium 高級訂閱？</div>
+  <div class="faq-a">答：<strong>不需要</strong>。FortiClient Cloud 不強制要求綁定 FortiCloud Premium 訂閱。</div>
+
+  <div class="faq-q">Q12：同一台 EMS 能否同時混合使用不同的授權類型（如 VPN/ZTNA 與 EPP/ATP 混合）？</div>
+  <div class="faq-a">答：技術上可以支援。</div>
+
+  <div class="faq-q">Q13：如果 VPN/ZTNA 與 EPP/ATP 的授權到期日不同，同一台 EMS 能否支援混合？</div>
+  <div class="faq-a">答：強烈建議客戶<strong>使用單一授權類型</strong>，避免在同一台 EMS 上混用不同類型與到期日的授權，以簡化管理複雜度。</div>
+
+  <div class="faq-q">Q14：什麼是 FortiClient 數位鑑識分析服務 (Forensics Service)？</div>
+  <div class="faq-a">答：此服務提供遠端端點數位鑑識分析，協助企業應對網路資安事件並快速復原。FortiGuard Labs 原廠鑑識分析專家會遠端協助數位證據的收集、鑑定與呈現，並產出最終鑑識報告。支援 FortiClient Cloud 以及 7.2.2 版以上之地端 EMS。</div>
+
+  <div class="faq-q">Q15：什麼是 FortiEndpoint？</div>
+  <div class="faq-a">答：FortiEndpoint 是以 FortiClient 為核心的統一端點安全平台，提供單一代理程式 (Agent)、單一授權與單一管理後台，全面融合了安全連線（VPN / ZTNA）與 EPP、EDR、XDR 等威脅偵測回應能力。詳細資訊請參閱《FortiEndpoint 訂購指南》。</div>
+
+  <h2>9. 導入與上線服務 (Onboarding)</h2>
+  <ul>
+    <li><strong>自主手動導入 (Manual / DIY)</strong>：原廠提供完整的官方文件、教學影片、開源工具庫與各類技術資源。</li>
+    <li><strong>最佳實踐顧問諮詢 (FortiCare BPS)</strong>：採用年度訂閱制的 FortiCare BPS，由原廠專家全程提供建置部屬、架構整合與版本升級遷移的顧問指引，深度整合於 FortiCare 支援體系。</li>
+    <li><strong>原廠端點專家代管 (Managed FortiClient)</strong>：初始環境設定、安全設定與設備上線皆直接由 Fortinet 原廠專家開箱交付。</li>
+    <li><strong>專案專業建置服務 (Professional Service, PS)</strong>：對於要求嚴格合約服務等級協定（SLA）的大型或客製化建置專案，PS 專業服務是絕佳的交付選項。</li>
+  </ul>
+
+  <footer>
+    <p>Copyright © 2026 Fortinet, Inc. All rights reserved. Fortinet®、FortiGate®、FortiCare®、FortiGuard® 等標誌均為 Fortinet, Inc. 之註冊商標。文中所載效能及其他數據指標均為理想實驗室環境下測試所得，實際效能可能受網路變數及環境影響。Fortinet 保留隨時修改、更新或修訂本刊物之權利，恕不另行通知。<br>
+    官方網站：<a href="https://www.fortinet.com" target="_blank">www.fortinet.com</a> ｜ 文件編號：FC-OG-R27-20260429</p>
+  </footer>
+
+</div>
+</body>
+</html>
